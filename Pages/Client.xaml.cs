@@ -26,6 +26,13 @@ namespace CarService_SteeringWheel.Pages
         public Client()
         {
             InitializeComponent();
+
+            try
+            {
+                List<Product> products = SqlHelper.findProducts();
+                lViewProduct.ItemsSource = products;
+            }
+            catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
         }
         public Client(User user)
         {
@@ -34,6 +41,9 @@ namespace CarService_SteeringWheel.Pages
             try
             {
                 _currUser = user;
+
+                List<Product> products = SqlHelper.findProducts();
+                lViewProduct.ItemsSource = products;
             }
             catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
         }

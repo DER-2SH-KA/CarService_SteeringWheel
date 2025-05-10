@@ -9,6 +9,56 @@
       Title="Client">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="220*"/>
+        <ColumnDefinition Width="200*"/>
+        <ColumnDefinition Width="200*"/>
+        <ColumnDefinition Width="80*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="56"/>
+        <RowDefinition/>
+        <RowDefinition Height="60"/>
+    </Grid.RowDefinitions>
+
+    <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"/>
+    <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"/>
+    <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0" Margin="5, 0, 5, 0" VerticalAlignment="Center"/>
+
+    <ListView Name="lViewProduct" Grid.Row="2" Grid.ColumnSpan="4" Margin="5,5,5,5" d:ItemsSource="{d:SampleData ItemCount=1}">
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+        </ListView.ItemContainerStyle>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <Border BorderBrush="Black" BorderThickness="1" Background="{Binding Background}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Width="180" Height="100" Margin="5"/>
+
+                        <StackPanel Grid.Column="1" Margin="5">
+                            <TextBlock Text="{Binding ProductName}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding ProductDescription}"/>
+                            <TextBlock Text="{Binding ProductManufacturer}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding JustCost}" TextDecorations="Strikethrough"/>
+                                <TextBlock Text="{Binding CostWithDiscount, StringFormat='\{0:f2} рублей'}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock Grid.Column="2" Text="{Binding ProductDiscountAmount, StringFormat='\{0} %'}" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
     </Grid>
 </Page>

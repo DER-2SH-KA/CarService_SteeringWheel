@@ -41,5 +41,16 @@ namespace CarService_SteeringWheel.DB
 
             return null;
         }
+
+        public static List<Product> findProducts()
+        {
+            try
+            {
+                return context.Product.ToList();
+            }
+            catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
+
+            return new List<Product>();
+        }
     }
 }

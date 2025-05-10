@@ -36,5 +36,49 @@ namespace CarService_SteeringWheel.DB
         public Nullable<int> MinCount { get; set; }
     
         public virtual ICollection<Order> Order { get; set; }
+
+        public String Background
+        {
+            get
+            {
+                if (this.ProductDiscountAmount >= 15)
+                {
+                    return "#7fff00";
+                }
+                return "#fff";
+            }
+        }
+
+        public String CostWithDiscount
+        {
+            get
+            {
+                if (this.ProductDiscountAmount > 0)
+                {
+                    Double cwd =
+                        Math.Round(
+                            Convert.ToDouble(this.ProductCost) * 
+                            (
+                             1 - 
+                             Convert.ToDouble(this.ProductDiscountAmount) 
+                             / 100
+                            )
+                            , 2
+                        );
+                    return cwd.ToString();
+                    // return "Curwa";
+                }
+
+                return this.ProductCost.ToString();
+            }
+        }
+
+        public String JustCost
+        {
+            get
+            {
+                return Math.Round(this.ProductCost, 2).ToString();
+            }
+        }
     }
 }
