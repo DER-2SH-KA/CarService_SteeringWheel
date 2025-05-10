@@ -11,7 +11,8 @@ namespace CarService_SteeringWheel.DB
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Windows.Media.Imaging;
+
     public partial class Product
     {
         public Product()
@@ -78,6 +79,20 @@ namespace CarService_SteeringWheel.DB
             get
             {
                 return Math.Round(this.ProductCost, 2).ToString();
+            }
+        }
+        public String ImgPath
+        {
+            get
+            {
+                if (this.ProductImage.Length > 0)
+                {
+                        String path = "/Resources/" + this.ProductImage;
+
+                        return path;
+                }
+                
+                return "/Resources/picture.png";
             }
         }
     }
