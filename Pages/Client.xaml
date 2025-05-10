@@ -22,10 +22,16 @@
         <RowDefinition Height="60"/>
     </Grid.RowDefinitions>
 
-    <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"/>
-    <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"/>
-    <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0" Margin="5, 0, 5, 0" VerticalAlignment="Center"/>
+    <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5, 0, 5, 0" TextChanged="txtSearch_TextChanged"/>
+    <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="cmbSorting_SelectionChanged"/>
+    <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0" Margin="5, 0, 5, 0" VerticalAlignment="Center" SelectionChanged="cmbFilter_SelectionChanged"/>
 
+    <StackPanel>
+            <TextBlock x:Name="txtBlockResultAmountCount" />
+            <TextBlock Text=" из "/>
+            <TextBlock x:Name="txtBlockAllCount" />
+        </StackPanel>
+        
     <ListView Name="lViewProduct" Grid.Row="2" Grid.ColumnSpan="4" Margin="5,5,5,5" d:ItemsSource="{d:SampleData ItemCount=1}">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
