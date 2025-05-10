@@ -19,5 +19,27 @@ namespace CarService_SteeringWheel.DB
 
             return context;
         }
+
+        public static User findUserByLoginAndPassword(
+            String l,
+            String p
+        )
+        {
+            try
+            {
+                return context.User
+                    .Where(x =>
+                        x.UserLogin.Equals(l) &&
+                        x.UserPassword.Equals(p)
+                    )
+                    .First();
+
+            }
+            catch (Exception ex) { 
+                Console.Error.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
     }
 }

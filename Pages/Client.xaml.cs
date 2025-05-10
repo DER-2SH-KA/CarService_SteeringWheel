@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarService_SteeringWheel.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,21 @@ namespace CarService_SteeringWheel.Pages
     /// </summary>
     public partial class Client : Page
     {
+        private User _currUser = null;
+
         public Client()
         {
             InitializeComponent();
+        }
+        public Client(User user)
+        {
+            InitializeComponent();
+
+            try
+            {
+                _currUser = user;
+            }
+            catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
         }
     }
 }

@@ -29,8 +29,12 @@ namespace CarService_SteeringWheel.Pages
         public Autho()
         {
             InitializeComponent();
+
             textBoxLogin.Focus(); // Set focus on Login TextBox Field.
             _click = 0;
+
+            textBlockCaptcha.Visibility = Visibility.Hidden;
+            textBoxCaptcha.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -38,7 +42,7 @@ namespace CarService_SteeringWheel.Pages
         /// </summary>
         private void BtnEnterAsGuest_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Pages.Client());
+            NavigationService.Navigate(new Pages.Client());
         }
 
         /// <summary>
@@ -59,32 +63,26 @@ namespace CarService_SteeringWheel.Pages
         /// </summary>
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            /*_click++;
             string login = textBoxLogin.Text.Trim();
             string password = pswBoxPassword.Password.Trim();
-            string hashedPassword = HashPasswords.HashPasswords.toHashSHA256(password);
 
             // textBoxCaptcha.Text = hashedPassword;
             // ShowHashPasswordInMessageBox(password);
 
             // Find User by Login and Password.
-            Users user = HelperDemon.findUserByLoginAndPassword(
-                login, hashedPassword
+            User user = SqlHelper.findUserByLoginAndPassword(
+                login, password
             );
-
-            Roles role;
 
             // MessageBox.Show($"User: {user.user_login}");
 
-            if (1 == _click)
+            if (1 > _click)
             {
                 // If user was founded.
                 if (user != null)
                 {
-                    role = user.Roles;
-
                     MessageBox.Show(
-                        $"Вы вошли под: {role.role_name}"
+                        $"Вы вошли под: {user.Role.RoleName.ToString()}"
                     );
 
                     textBoxLogin.Text = "";
@@ -106,87 +104,97 @@ namespace CarService_SteeringWheel.Pages
                 }
                 else
                 {
-                    captchaText = CaptchaGenerator.GenerateCaptchaText(6); // Generate Captcha.
+                    MessageBox.Show("Вы ввели неверно логин или пароль!");
+                    captchaText = GenerateCaptchaText(6);
                 }
             }
-            else if (0 == _click % 3)
-            {
-                MessageBox.Show($"clicks: {_click} == 3");
-                DisableFiledsAndShowTimer();
-            }
-            else if (1 < _click)
-            {
-                // Show Captcha Fields and Try Enter into System Again.
-
-                GenerateCaptcha(captchaText);
-                // MessageBox.Show($"Капча: {textBlockCaptcha.Text}\nМоё поле: {textBoxCaptcha.Text}");
-                if (user != null
-                    && HashPasswords.HashPasswords.toHashSHA256(textBoxCaptcha.Text) ==
-                    HashPasswords.HashPasswords.toHashSHA256(textBlockCaptcha.Text))
-                {
-                    role = user.Roles;
-                    MessageBox.Show(
-                        $"Вы вошли под: {role.role_name}"
-                    );
-
-                    textBoxLogin.Text = "";
-                    pswBoxPassword.Password = "";
-                    captchaText = "";
-                    textBlockCaptcha.Text = "Капчта: ";
-                    textBoxCaptcha.Text = "";
-
-                    textBlockCaptcha.Visibility = Visibility.Hidden;
-                    textBoxCaptcha.Visibility = Visibility.Hidden;
-
-                    textBoxLogin.Focus();
-
-                    LoadPage(user);
-                }
-                else
-                {
-                    MessageBox.Show(
-                        $"Введите данные заново!"
-                    );
-                    captchaText = CaptchaGenerator.GenerateCaptchaText(6);
-                    GenerateCaptcha(captchaText);
-                }
-            }*/
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Go to Page by User Role value.
         /// </summary>
         /// <param name="user"></param>
         private void LoadPage(
-            Users user
+            User user
         )
         {
-            Roles role = user.Roles;
+            Role role = user.Role;
             _click = 0;
-            switch (role.role_name.ToString())
+            switch (role.RoleName.ToString())
             {
                 case "Клиент":
                     NavigationService.Navigate(
-                        new Client(
-                            user,
-                            role
+                        new Pages.Client(
+                            user
                         )
                     );
                     break;
 
-                case "Админ":
+                /*case "Админ":
                     NavigationService.Navigate(
                         new Admin(
                             user,
                             role
                         )
                     );
-                    break;
+                    break;*/
 
                 default:
                     MessageBox.Show("Такой роли нет!");
                     break;
             }
-        }*/
+        }
+
+        private static readonly Random RD = new Random();
+        private const string CHARACTERS =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        /// <summary>
+        /// Generate new Catpcha by length.
+        /// </summary>
+        /// <param name="length">Int32 Length of Captcha</param>
+        /// <returns>String Generated Captcha</returns>
+        public static string GenerateCaptchaText(int length)
+        {
+            string result = "";
+
+            try
+            {
+                if (1 > length)
+                {
+                    throw new ArgumentException(
+                        "Длина текста капчи должна быть больше нуля!"
+                    );
+                }
+
+                StringBuilder captchaTextByStringBuilder = new StringBuilder(length);
+
+                // Generate Catpcha.
+                int index = -1;
+                for (int i = 0; i < length; i++)
+                {
+                    index = RD.Next(CHARACTERS.Length);
+                    captchaTextByStringBuilder.Append(CHARACTERS[index]);
+                }
+
+                result = captchaTextByStringBuilder.ToString();
+            }
+            catch (ArgumentException aex)
+            {
+                Console.WriteLine(aex);
+                result = "Длина меньше нуля!";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                result = ex.Message;
+            }
+            finally
+            {
+                Console.WriteLine("Работа модуля капчи завершена");
+            }
+
+            return result;
+        }
     }
 }
