@@ -26,7 +26,9 @@
     <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="cmbSorting_SelectionChanged"/>
     <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0" Margin="5, 0, 5, 0" VerticalAlignment="Center" SelectionChanged="cmbFilter_SelectionChanged"/>
 
-    <StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="txtBlockResultAmountCount" />
             <TextBlock Text=" из "/>
             <TextBlock x:Name="txtBlockAllCount" />
