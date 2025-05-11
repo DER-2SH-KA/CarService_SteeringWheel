@@ -134,6 +134,10 @@ namespace CarService_SteeringWheel.Pages
                     NavigationService.Navigate(new Client(user));
                     break;
 
+                case "Администратор":
+                    NavigationService.Navigate(new Admin(user));
+                    break;
+
                 /*case "Админ":
                     NavigationService.Navigate(
                         new Admin(

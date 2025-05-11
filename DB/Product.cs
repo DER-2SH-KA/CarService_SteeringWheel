@@ -85,7 +85,7 @@ namespace CarService_SteeringWheel.DB
         {
             get
             {
-                if (this.ProductImage.Length > 0)
+                if (this.ProductImage != null && this.ProductImage.Length > 0)
                 {
                     String path = "/Resources/" + this.ProductImage;
 
