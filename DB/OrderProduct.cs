@@ -17,6 +17,7 @@ namespace CarService_SteeringWheel.DB
         public int OrderID { get; set; }
         public string ProductArticleNumber { get; set; }
         public int ID { get; set; }
+        public Nullable<int> ProductCount { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

@@ -53,5 +53,58 @@ namespace CarService_SteeringWheel.Pages
                 productList.Remove(LViewOrder.SelectedItem as Product);
             LViewOrder.Items.Refresh();
         }
+
+        private void btnOrderSave_Click(object sender, RoutedEventArgs e)
+        {
+            var productArticle = productList.Select(p => p.ProductArticleNumber).ToArray();
+            Random random = new Random(); 
+            var date = DateTime.Now;
+            if (productList.Any(p => p.ProductQuantityInStock < 3)) 
+            {
+                date = date.AddDays(6);
+            }
+            else
+                date = date.AddDays(3);
+            //
+            if (cmbPickupPoint.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите пункт выдачи!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                Order newOrder = new Order()
+                {
+                    OrderStatus = "Новый",
+                    OrderDate = DateTime.Now,
+                    OrderPickupPoint = cmbPickupPoint.SelectedIndex + 1,
+                    OrderDeliveryDate = date,
+                    ReceiptCode = random.Next(100, 1000),
+                    ClientFullName = txtUser.Text,
+                };
+
+                SqlHelper.GetContext().Order.Add(newOrder);
+
+                for (int i = 0; i < productArticle.Count(); i++)
+                {
+                    OrderProduct newOrderProduct = new OrderProduct()
+                    {
+                        OrderID = newOrder.OrderID,
+                        ProductArticleNumber = productArticle[i],
+                        ProductCount = 1
+                    };
+                    SqlHelper.GetContext().OrderProduct.Add(newOrderProduct);
+                }
+
+                SqlHelper.GetContext().SaveChanges();
+                MessageBox.Show("Заказ оформлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                NavigationService.Navigate(new OrderTicketPage(newOrder, productList));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
     }
 }
