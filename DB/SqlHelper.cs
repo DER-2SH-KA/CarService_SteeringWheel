@@ -52,5 +52,16 @@ namespace CarService_SteeringWheel.DB
 
             return new List<Product>();
         }
+
+        public static List<PickupPoint> findPickupPoints()
+        {
+            try
+            {
+                return context.PickupPoint.ToList();
+            }
+            catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
+
+            return new List<PickupPoint>();
+        }
     }
 }

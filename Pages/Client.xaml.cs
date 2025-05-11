@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarService_SteeringWheel.Windows;
 
 namespace CarService_SteeringWheel.Pages
 {
@@ -187,7 +188,8 @@ namespace CarService_SteeringWheel.Pages
 
         private void btnOrder_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            OrderWindow order = new OrderWindow(orderProducts, _currUser);
+            order.ShowDialog();
         }
     }
 }
