@@ -73,6 +73,9 @@
     <Compile Include="DB\Order.cs">
       <DependentUpon>TradeModel1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\OrderProduct.cs">
+      <DependentUpon>TradeModel1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\PickupPoint.cs">
       <DependentUpon>TradeModel1.tt</DependentUpon>
     </Compile>
@@ -167,16 +170,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DB\TradeModel1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TradeModel1.Context.cs</LastGenOutput>
-      <DependentUpon>TradeModel1.edmx</DependentUpon>
-    </Content>
-    <Content Include="DB\TradeModel1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TradeModel1.edmx</DependentUpon>
-      <LastGenOutput>TradeModel1.cs</LastGenOutput>
-    </Content>
     <Resource Include="Resources\picture.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -217,6 +210,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DB\TradeModel1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TradeModel1.edmx</DependentUpon>
+      <LastGenOutput>TradeModel1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB\TradeModel1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TradeModel1.edmx</DependentUpon>
+      <LastGenOutput>TradeModel1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

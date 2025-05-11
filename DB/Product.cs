@@ -11,13 +11,12 @@ namespace CarService_SteeringWheel.DB
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows.Media.Imaging;
-
+    
     public partial class Product
     {
         public Product()
         {
-            this.Order = new HashSet<Order>();
+            this.OrderProduct = new HashSet<OrderProduct>();
         }
     
         public string ProductArticleNumber { get; set; }
@@ -36,7 +35,7 @@ namespace CarService_SteeringWheel.DB
         public Nullable<int> CountInPack { get; set; }
         public Nullable<int> MinCount { get; set; }
     
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<OrderProduct> OrderProduct { get; set; }
 
         public String Background
         {
@@ -58,10 +57,10 @@ namespace CarService_SteeringWheel.DB
                 {
                     Double cwd =
                         Math.Round(
-                            Convert.ToDouble(this.ProductCost) * 
+                            Convert.ToDouble(this.ProductCost) *
                             (
-                             1 - 
-                             Convert.ToDouble(this.ProductDiscountAmount) 
+                             1 -
+                             Convert.ToDouble(this.ProductDiscountAmount)
                              / 100
                             )
                             , 2
@@ -81,17 +80,18 @@ namespace CarService_SteeringWheel.DB
                 return Math.Round(this.ProductCost, 2).ToString();
             }
         }
+
         public String ImgPath
         {
             get
             {
                 if (this.ProductImage.Length > 0)
                 {
-                        String path = "/Resources/" + this.ProductImage;
+                    String path = "/Resources/" + this.ProductImage;
 
-                        return path;
+                    return path;
                 }
-                
+
                 return "/Resources/picture.png";
             }
         }

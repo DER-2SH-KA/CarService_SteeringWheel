@@ -29,6 +29,7 @@ namespace CarService_SteeringWheel.DB
         }
     
         public DbSet<Order> Order { get; set; }
+        public DbSet<OrderProduct> OrderProduct { get; set; }
         public DbSet<PickupPoint> PickupPoint { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Role> Role { get; set; }
