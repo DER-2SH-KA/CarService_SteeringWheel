@@ -24,13 +24,13 @@ namespace CarService_SteeringWheel.Pages
         private User _currUser = null;
         private List<Product> products;
         private List<Product> fullProducts;
-        private string[] sortList =
+        private string[] sortList = new string[]
         {
             "Без сортировки",
             "Стоимость по возрастанию",
             "Стоимость по убыванию"
         };
-        private string[] filterDiscountList =
+        private string[] filterDiscountList = new string[]
         {
             "Все диапазоны",
             "0%-9,99%",
@@ -38,7 +38,7 @@ namespace CarService_SteeringWheel.Pages
             "15% и более"
         };
 
-        public Client()
+        /*public Client()
         {
             InitializeComponent();
 
@@ -54,9 +54,11 @@ namespace CarService_SteeringWheel.Pages
 
                 cmbSorting.ItemsSource = sortList;
                 cmbFilter.ItemsSource = filterDiscountList;
+
+                User();
             }
             catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
-        }
+        }*/
 
         public Client(User user)
         {
@@ -73,6 +75,11 @@ namespace CarService_SteeringWheel.Pages
                 txtBlockResultAmountCount.Text = products.Count.ToString();
 
                 lViewProduct.ItemsSource = products;
+
+                cmbSorting.ItemsSource = sortList;
+                cmbFilter.ItemsSource = filterDiscountList;
+
+                User();
             }
             catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
         }
@@ -154,6 +161,33 @@ namespace CarService_SteeringWheel.Pages
         private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateData();
+        }
+
+        private void User()
+        {
+            if (_currUser != null)
+                txtBlockFullName.Text = _currUser.UserSurname.ToString() + 
+                    _currUser.UserName.ToString() + 
+                    " " + _currUser.UserPatronymic.ToString();
+            else
+                txtBlockFullName.Text = "Гость";
+        }
+
+        List<Product> orderProducts = new List<Product>();
+
+        private void btnAddProduct_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            orderProducts.Add(lViewProduct.SelectedItem as Product);
+
+            if (orderProducts.Count > 0)
+            {
+                btnOrder.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnOrder_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
         }
     }
 }

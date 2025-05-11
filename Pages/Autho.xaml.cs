@@ -42,7 +42,7 @@ namespace CarService_SteeringWheel.Pages
         /// </summary>
         private void BtnEnterAsGuest_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Pages.Client());
+            NavigationService.Navigate(new Pages.Client(null));
         }
 
         /// <summary>
